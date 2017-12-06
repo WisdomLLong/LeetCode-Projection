@@ -17,51 +17,68 @@ The median is (2 + 3)/2 = 2.5
 
 
 ##########################################################################
-# Better Solution
+# Better Solution 1
 ##########################################################################
-func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
-    num1:=len(nums1)
-    num2:=len(nums2)
-    if num1==0&&num2==1{
-        return float64(nums2[0])
-    }else if num1==1&&num2==0{
-        return float64(nums1[0])
-    }
-    
-    array:=make([]int,num1+num2)
-    local:=0
-    var i int
-    var j int
-    i = 0
-    j = 0
-    for i<num1&&j<num2{
-        if nums1[i]<=nums2[j]{
-            array[local]=nums1[i]
-            i++
-            local++
-        }else{
-            array[local]=nums2[j]
-            j++
-            local++
-        }
-    }
-    if i>=num1{
-        for j<num2{
-            array[local]=nums2[j]
-            j++
-            local++
-        }
-    }else if j>=num2{
-        for i<num1{
-            array[local]=nums1[i]
-            i++
-            local++
-        }
-    }
-    //dan
-    if local%2!=0{
-        return float64(array[local/2]*1.0)
-    }else{
-        return float64((float64(array[local/2])+float64(array[local/2-1]))/2.0)
-    }
-}
+class Solution(object):
+    def findMedianSortedArrays(self, A, B):
+        """
+        :type A: List[int]
+        :type B: List[int]
+        :rtype: float
+        """
+        m, n = len(A), len(B)
+        if m > n:
+            A, B, m, n = B, A, n, m
+            
+        imin, imax, half_len = 0, m, (m + n + 1) / 2
+        while imin <= imax:
+            i = (imin + imax) / 2
+            j = half_len - i
+            if j > 0 and i < m and B[j-1] > A[i]:
+                # i is too small, must increase it
+                imin = i + 1
+            elif j < n and i > 0 and A[i-1] > B[j]:
+                # i is too big, must decrease it
+                imax = i - 1
+            else:
+                # i is perfect
+
+                if i == 0: max_of_left = B[j-1]
+                elif j == 0: max_of_left = A[i-1]
+                else: max_of_left = max(A[i-1], B[j-1])
+
+                if (m + n) % 2 == 1:
+                    return max_of_left
+
+                if i == m: min_of_right = B[j]
+                elif j == n: min_of_right = A[i]
+                else: min_of_right = min(A[i], B[j])
+
+                return (max_of_left + min_of_right) / 2.0
+
+##########################################################################
+# Better Solution 2
+##########################################################################
+
+class Solution:
+
+    def getKth(self, A, B, k):
+        lenA = len(A); lenB = len(B)
+        if lenA > lenB: return self.getKth(B, A, k)
+        if lenA == 0: return B[k - 1]
+        if k == 1: return min(A[0], B[0])
+        pa = min(k/2, lenA); pb = k - pa
+        if A[pa - 1] <= B[pb - 1]:
+            return self.getKth(A[pa:], B, pb)
+        else:
+            return self.getKth(A, B[pb:], pa)
+
+    def findMedianSortedArrays(self, nums1, nums2):
+        A,B = nums1,nums2
+        lenA = len(A); lenB = len(B)
+        if (lenA + lenB) % 2 == 1: 
+            return self.getKth(A, B, (lenA + lenB)//2 + 1)
+        else:
+            return (self.getKth(A, B, (lenA + lenB)//2) + self.getKth(A, B, (lenA + lenB)//2 + 1)) * 0.5
+        
+            
