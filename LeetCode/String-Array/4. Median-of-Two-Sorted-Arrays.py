@@ -33,8 +33,12 @@ class Solution(object):
             
         imin, imax, half_len = 0, m, int((m + n + 1) / 2)
         while imin <= imax:
-            i = int((imin + imax) / 2)
+            i = int((imin + imax) / 2)  
+            # while的停止条件，这里i的计算以及下面imin和imax的计算说明，0<=i<=m
+            # i一直在以二分法的方式寻找中间值
             j = half_len - i
+            # j只需要根据上面这个固定公式计算就可以了
+            # i和j分别表示A和B的位于合并后序列的中间数位置
             if j > 0 and i < m and B[j-1] > A[i]:
                 # i is too small, must increase it
                 imin = i + 1
@@ -43,16 +47,21 @@ class Solution(object):
                 imax = i - 1
             else:
                 # i is perfect
-
+                '''
+                最终只可能出现三种情况：
+                1、中间值位于A中间，B中间，此时A和B相当于交叉：B[j-1]<=A[i], A[i-1]<=B[j]
+                2、A按照大小排序完全位于B的左边，此时i==m
+                3、A按照大小排序完全位于B的右边，此时i==0
+                '''
                 if i == 0: max_of_left = B[j-1]
-                elif j == 0: max_of_left = A[i-1]
+                elif j == 0: max_of_left = A[i-1]   # 此时m==n
                 else: max_of_left = max(A[i-1], B[j-1])
 
                 if (m + n) % 2 == 1:
                     return max_of_left
 
                 if i == m: min_of_right = B[j]
-                elif j == n: min_of_right = A[i]
+                elif j == n: min_of_right = A[i]    # # 此时m==n
                 else: min_of_right = min(A[i], B[j])
 
                 return (max_of_left + min_of_right) / 2.0
