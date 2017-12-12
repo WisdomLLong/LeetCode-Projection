@@ -67,7 +67,7 @@ class Solution:
         if lenA > lenB: return self.getKth(B, A, k)
         if lenA == 0: return B[k - 1]
         if k == 1: return min(A[0], B[0])
-        pa = min(k/2, lenA); pb = k - pa
+        pa = min(int(k/2), lenA); pb = k - pa
         if A[pa - 1] <= B[pb - 1]:
             return self.getKth(A[pa:], B, pb)
         else:
