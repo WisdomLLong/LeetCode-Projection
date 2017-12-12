@@ -15,7 +15,6 @@ nums2 = [3, 4]
 The median is (2 + 3)/2 = 2.5
 '''
 
-
 ##########################################################################
 # Better Solution 1
 ##########################################################################
@@ -30,9 +29,9 @@ class Solution(object):
         if m > n:
             A, B, m, n = B, A, n, m
             
-        imin, imax, half_len = 0, m, (m + n + 1) / 2
+        imin, imax, half_len = 0, m, int((m + n + 1) / 2)
         while imin <= imax:
-            i = (imin + imax) / 2
+            i = int((imin + imax) / 2)
             j = half_len - i
             if j > 0 and i < m and B[j-1] > A[i]:
                 # i is too small, must increase it
