@@ -8,3 +8,32 @@ Note:
 You may assume k is always valid, 1 ≤ k ≤ array's length.
 '''
 
+'''
+堆的用法
+'''
+
+#########################################################
+# Better Solution
+#########################################################
+import heapq
+
+class Solution:
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+
+        heap = []
+
+        for num in nums:
+            if len(heap) < k:
+                heapq.heappush(heap, num)
+            else:
+                if heap[0] <= num:
+                    heapq.heappushpop(heap, num)
+
+        return heap[0]
