@@ -22,11 +22,15 @@ class Node:
 # 判断是否为空: isEmpty()
 #####################################################
 def isEmpty(self):
-    return (self.length == 0
+    return (self.length == 0)
 
 #####################################################
 # 增加一个节点(在链表尾添加): append()
 #####################################################
+class LinkedList(object):
+     def __init__(self):
+            self.head = None
+     
 def append(self, dataOrNode):
     item = None
     if isinstance(dataOrNode, Node):
@@ -44,6 +48,7 @@ def append(self, dataOrNode):
             node = node._next
         node._next = item
         self.length += 1
+
 
 #####################################################
 # 删除一个节点: delete()
