@@ -48,14 +48,6 @@ def append(self, dataOrNode):
             node = node._next
         node._next = item
         self.length += 1
-
-#####################################################
-# 倒叙打印链表数据: nodePrint_reverse()
-#####################################################
-def nodePrint_reverse(self, lhead):
-        if lhead.next:
-            self.nodePrint_reverse(lhead = lhead.next)
-        print(lhead.data)
         
 #####################################################
 # 删除一个节点: delete()
