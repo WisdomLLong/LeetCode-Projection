@@ -22,4 +22,5 @@ class TwoTree(object):
             res.tleft = self.reConstructBinaryTree(pre[1:tin.index(pre[0])+1], tin[:tin.index(pre[0])])
             res.tright = self.reConstructBinaryTree(pre[tin.index(pre[0])+1:], tin[tin.index(pre[0])+1:])
         return res   
-TwoTree().reConstructBinaryTree([1,2,4,7,3,5,6,8], [4,7,2,1,5,3,8,6])
+root = TwoTree().reConstructBinaryTree([1,2,4,7,3,5,6,8], [4,7,2,1,5,3,8,6])
+#@@ 注意这里的root得到的返回值是根节点res，其他节点也返回了，只是作为tleft和tright返回的。
