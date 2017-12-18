@@ -42,6 +42,11 @@ class quickSort(object):
 a = [5,4,6,3,23,6,3,4]
 quickSort().sortAll( a, 0, len(a)-1)
 print(a)    
+'''
+为什么可以直接打印a，sortAll都没有返回。
+因为a是一个类的实例，而不是一个简单的数据类型int。
+sortAll函数的data是一个指向这个实例的指针
+'''
 
 
 
