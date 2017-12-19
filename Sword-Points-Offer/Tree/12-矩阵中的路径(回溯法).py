@@ -4,7 +4,7 @@
 '''
 
 ############################################
-# Better Solution 1 深度优先搜索
+# Better Solution 1 深度优先搜索_1
 ############################################
 class Solution:
     def exist(self, board, word):
@@ -42,6 +42,50 @@ class Solution:
                     return True
                 visited[i][j] = 0
         return False
+    
+############################################
+# Better Solution 1 深度优先搜索_2
+############################################
+class Solution:
+    def exist(self, board, word):
+        """
+        :type board: List[List[str]]
+        :type word: str
+        :rtype: bool
+        """
+        if word == "":
+            return True
+        if len(board) == 0:
+            return False
+        visited = [[0] * len(board[0]) for i in range(0, len(board))]
+        
+        def dfs(i, j, board, visited, word, index):
+            if len(word) - 1 == index and :
+                return True
+            hasPath = False
+            if 0<= i <len(board) and 0<= j < len(board[0]) and word[index] == board[i][j] and visited[i][j] == 0:
+                index += 1
+                visited[i][j] == 1
+                hasPath = dfs(i, j-1, board, visited, word, index) \
+                            or dfs(i, j+1, board, visited, word, index) \
+                            or dfs(i-1, j, board, visited, word, index) \
+                            or dfs(i+1, j, board, visited, word, index)
+                            
+                if not hasPath:
+                    index -= 1
+                    visited[i][j] == 0
+
+            return hasPath
+            
+            
+        for i in range(0, len(board)):
+            for j in range(0, len(board[0])):
+                visited[i][j] = 0
+                if dfs(i, j, board, visited, word, 0):
+                    return True
+        return False
+        
+Solution().exist([["a"]], "ab")
     
 ############################################
 # Better Solution 2 广度优先搜索，容易超时
