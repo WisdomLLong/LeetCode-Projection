@@ -8,84 +8,32 @@
 ############################################
 class Solution:
     def exist(self, board, word):
-        """
-        :type board: List[List[str]]
-        :type word: str
-        :rtype: bool
-        """
-        if word == "":
-            return True
-        if len(board) == 0:
-            return False
-        visited = [[0] * len(board[0]) for i in range(0, len(board))]
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        def dfs(i, j, board, visited, word, index):
-            if word[index] != board[i][j]:
-                return False
-            if len(word) - 1 == index:
-                return True
-            for direction in directions:
-                # 为什么这里不是深度优先，因为for循环是一个一个进行的，当一条路径走通的时候，就会return TRUE
-                ni, nj = i + direction[0], j + direction[1]
-                if ni >= 0 and ni < len(board) and nj >= 0 and nj < len(board[0]):
-                    if visited[ni][nj] == 0:
-                        visited[ni][nj] = 1
-                        if dfs(ni, nj, board, visited, word, index + 1):
-                            return True
-                        visited[ni][nj] = 0
-            return False
-            
-        for i in range(0, len(board)):
-            for j in range(0, len(board[0])):
-                visited[i][j] = 1
-                if dfs(i, j, board, visited, word, 0):
-                    return True
-                visited[i][j] = 0
-        return False
-    
-############################################
-# Better Solution 1 深度优先搜索_2
-############################################
-class Solution:
-    def exist(self, board, word):
-        """
-        :type board: List[List[str]]
-        :type word: str
-        :rtype: bool
-        """
-        if word == "":
-            return True
-        if len(board) == 0:
-            return False
-        visited = [[0] * len(board[0]) for i in range(0, len(board))]
-        
-        def dfs(i, j, board, visited, word, index):
-            if len(word) - 1 == index and :
-                return True
-            hasPath = False
-            if 0<= i <len(board) and 0<= j < len(board[0]) and word[index] == board[i][j] and visited[i][j] == 0:
-                index += 1
-                visited[i][j] == 1
-                hasPath = dfs(i, j-1, board, visited, word, index) \
-                            or dfs(i, j+1, board, visited, word, index) \
-                            or dfs(i-1, j, board, visited, word, index) \
-                            or dfs(i+1, j, board, visited, word, index)
-                            
-                if not hasPath:
-                    index -= 1
-                    visited[i][j] == 0
+        visited = [[False for _ in range(len(board[0])+1)] for _ in range(len(board)+1)]
 
-            return hasPath
-            
-            
-        for i in range(0, len(board)):
-            for j in range(0, len(board[0])):
-                visited[i][j] = 0
-                if dfs(i, j, board, visited, word, 0):
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if word[0] == board[i][j] and self.dfs(board, word, i, j, 0, visited):
                     return True
         return False
-        
-Solution().exist([["a"]], "ab")
+
+    def dfs(self, board, word, i, j, idx, visited):
+        if idx == len(word):
+            return True
+
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or board[i][j] != word[idx] or visited[i][j]:
+            return False
+
+        visited[i][j] = True
+        up = self.dfs(board, word, i-1, j, idx+1, visited)
+        down = self.dfs(board, word, i+1, j, idx+1, visited)
+        left = self.dfs(board, word, i, j-1, idx+1, visited)
+        right = self.dfs(board, word, i, j+1, idx+1, visited)
+        # 这样岂不是广度优先？测试了与深度优先的耗时竟然相同
+        if up or down or left or right:
+            return True
+
+        visited[i][j] = False
+        return False
     
 ############################################
 # Better Solution 2 广度优先搜索，容易超时
@@ -118,4 +66,11 @@ class Solution:
                (ii, jj) not in path 
                and matrix[ii*col + jj]==data[len(path)]]
         return sum([self.visit(path+[x], matrix, row, col,data) for x in nex])
-    # 虽然这里也是用了for循环，但他是深度优先搜索，因为这里有一个列表生成器，每一个生成器都是要执行的。
+        # 虽然这里也是用了for循环，但他是深度优先搜索，因为这里有一个列表生成器，每一个生成器都是要执行的。
+        '''
+        for x in nex:
+            if self.dfs_bfs(path+[x], matrix, row, col,data):
+                return True
+        '''
+        #上面这个是深度优先搜索，不会超时
+    
