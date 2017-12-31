@@ -16,7 +16,8 @@ class solution(object):
            
 ###################################################
 Lazy Solution 2
-###################################################         
+###################################################  
+import re
 class solution(object):
     def isNumber(self, string):
         return re.match(r"^[\+\-]?[0-9]*(\.[0-9]*)?([eE][\+\-]?[0-9]+)?$",string)
