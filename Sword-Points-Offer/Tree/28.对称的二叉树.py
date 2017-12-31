@@ -26,3 +26,5 @@ class Solution(object):
             
         return self.isSymmetrical_2(proot1.tleft, proot2.tright) and \
                 self.isSymmetrical_2(proot1.tright, proot2.tleft)
+                # 这里的proot1.tleft proot1.tright 就是前序遍历
+                # proot2.tright proot2.tleft 就是新的遍历方式
