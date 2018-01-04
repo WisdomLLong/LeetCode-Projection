@@ -33,3 +33,26 @@ class solution(object):
             if toBePrinted == 0:
                 print('\n')
                 toBePrinted, nextLine = nextLine, 0
+
+                
+##########################################################
+# P176 S形打印树的值
+##########################################################
+class Tree(object):
+    def __init__(self, data, tleft, tright):
+        self.tree = data
+        self.tleft = None
+        self.tright = None
+
+class solution(object):
+    def printTreeByS(self, troot):
+        # 利用两个栈来存储树的两行
+        if troot == None:
+            return
+        twoLine = [[], []]
+        currentLine = 0
+        nextLine = 1
+        twoLine[currentLine].append(troot)
+        
+        while len(twoLine[currentLine])!=0 or len(twoLine[nextLine])!=0:
+            toPrint = twoLine[currentLine].pop(0)
