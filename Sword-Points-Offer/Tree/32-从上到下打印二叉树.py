@@ -55,4 +55,22 @@ class solution(object):
         twoLine[currentLine].append(troot)
         
         while len(twoLine[currentLine])!=0 or len(twoLine[nextLine])!=0:
-            toPrint = twoLine[currentLine].pop(0)
+            toPrint = twoLine[currentLine].pop(-1)
+            print(toPrint.tree)
+            
+            if currentLine == 0:
+                if toPrint.tleft != None:
+                    twoLine[nextLine].append(toPrint.tleft)
+                if toPrint.tright != None:
+                    twoLine[nextLine].append(toPrint.tright)
+            else:
+                if toPrint.tright != None:
+                    twoLine[nextLine].append(toPrint.tright)
+                if toPrint.tleft != None:
+                    twoLine[nextLine].append(toPrint.tleft)
+                    
+            if len(twoLine[currentLine]) == 0:
+                print('\n')
+                currentLine = 1 - currentLine
+                nextLine = 1 - nextLine
+
