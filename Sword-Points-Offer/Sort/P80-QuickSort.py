@@ -13,10 +13,10 @@ class quickSort(object):
         small = start-1
         index = start
         while index < end:
-            if data[index] < data[end]:
+            if data[index] < data[end]:     # 寻找一个小于随机抽样点数值的点
                 small += 1
                 if small != index:
-                    data[index], data[small] = data[small], data[index]
+                    data[index], data[small] = data[small], data[index]     # 将他的值与他左边的第一个大于随机抽样点的值进行交换。
             index += 1
         '''
         for index in range(index, end):
