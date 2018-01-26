@@ -3,9 +3,10 @@ import random
 class quickSort(object):
     def sortPart(self, data, start, end):
         if not isinstance(data, list) or start<0 or end>=len(data):
-            print("Invalid Parameters") # 理论上应该抛出异常
-            return
-        
+            #print("Invalid Parameters") # 理论上应该抛出异常
+            #return
+            raise ValueError("Invalid Parameters")      # 直接抛出一个异常
+            
         index = random.randint(start, end)
         data[index], data[end] = data[end], data[index]
         
