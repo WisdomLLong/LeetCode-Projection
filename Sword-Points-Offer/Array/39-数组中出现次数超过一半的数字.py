@@ -13,7 +13,7 @@ class Solution(object):
 
 
 #############################################################
-# Solution1
+# Better Solution
 #############################################################
 '''
 遍历整个数组的每一个元素，并存储两个数据，一个是元素的值，一个是它的'次数'，如果次数变为零，则用最新的元素数据来代替
@@ -21,6 +21,10 @@ class Solution(object):
 '''
 class Solution(object):
     def majorityElement(self, num):
+        
+        if num == None:
+            return False
+        
         save_data = num[0]
         save_number = 1
         for data in num[1:]:
